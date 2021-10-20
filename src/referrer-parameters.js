@@ -1,72 +1,42 @@
 import { StickyParameters } from './sticky-parameters.js';
 import Uri from 'jsuri';
 
-const DEFAULT_RELEVANT_PARAMETERS = ['akttyp', 'med', 'aktnr', 'wnr'];
-
-const DEFAULT_INDEX_PARAMETER = 'akttyp';
-
-const getDefaultReferrerParameterValues = (refstring) => {
-    let processOtherFields = false;
-
-    if (/^https?:\/\/(www\.)?google\.[a-z]+/.test(refstring)) {
-        refstring = 'google';
-        processOtherFields = true;
-    } else if (/^https?:\/\/(www\.)?bing\.[a-z]+/.test(refstring)) {
-        refstring = 'bing';
-        processOtherFields = true;
-    } else if (/^https?:\/\/(\w+\.)?search\.yahoo\.[a-z]/.test(refstring)) {
-        refstring = 'yahoo search';
-        processOtherFields = true;
-    } else if (/^https?:\/\/(www\.)?ecosia\.org/.test(refstring)) {
-        refstring = 'ecosia';
-        processOtherFields = true;
-    } else if (/^https?:\/\/(www\.)?duckduckgo\.com/.test(refstring)) {
-        refstring = 'duckduckgo';
-        processOtherFields = true;
-    }
-
-    if (processOtherFields) {
-        return [
-            {
-                name: 'akttyp',
-                value: 'organische suche',
-            },
-            {
-                name: 'med',
-                value: refstring,
-            },
-            {
-                name: 'aktnr',
-                value: '84834',
-            },
-            {
-                name: 'wnr',
-                value: '04393672',
-            },
-        ];
-    } else {
-        return [
-            {
-                name: 'med',
-                value: refstring,
-            },
-        ];
-    }
-};
-
 export class ReferrerParameters {
+    /**
+     * @typedef {{name: string, value: string}} ParameterDefinition
+     *
+     * @param {StickyParameters} spToRunWhenInitialized
+     *
+     * @param {string} indexParameter
+     *        If this parameter is already present in the current URL, referrer
+     *        parsing will be skipped.
+     *
+     * @param {string[]} relevantParameters
+     *        Only the values of these parameters will be parsed.
+     *
+     * @param {(string) => ParameterDefinition[]} getReferrerParameterValues
+     *        A callback that receives the page's referrer string and should
+     *        return an array of parameter objects to be set on the current
+     *        location.
+     *
+     * @param {ParameterDefinition[]} directParamsToSet
+     *        An array of parameters to be set when the indexParameter is not
+     *        present and no referrer is set.
+     */
     constructor(
         spToRunWhenInitialized,
-        indexParameter = DEFAULT_INDEX_PARAMETER,
-        relevantParamters = DEFAULT_RELEVANT_PARAMETERS,
-        getReferrerParameterValues = getDefaultReferrerParameterValues
+        indexParameter = 'parseReferrer',
+        relevantParameters = ['parseReferrer'],
+        getReferrerParameterValues = () => [],
+        directParamsToSet = []
     ) {
         this.url = new Uri(window.location.href);
+        this.directParamsToSet = directParamsToSet;
         this.getReferrerParameterValues = getReferrerParameterValues;
 
         const params = StickyParameters.parseParameters(
             this.url,
-            relevantParamters
+            relevantParameters
         );
 
         if (!params.find((el) => el.name === indexParameter)) {
@@ -84,34 +54,14 @@ export class ReferrerParameters {
         if (document.referrer && ref.host() !== this.url.host()) {
             paramsToBeSet = this.getReferrerParameterValues(document.referrer);
         } else {
-            paramsToBeSet = [
-                {
-                    name: 'akttyp',
-                    value: 'direkt',
-                },
-                {
-                    name: 'aktnr',
-                    value: '84834',
-                },
-                {
-                    name: 'wnr',
-                    value: '04393689',
-                },
-            ];
+            paramsToBeSet = this.directParamsToSet;
         }
 
         paramsToBeSet.forEach((param) => {
             this.url.addQueryParam(param.name, param.value);
         });
 
-        // ~~in case there's a form on the current page~~, update the current location
-        // results in a race condition; reading the referrer from out of the
-        // scripts would be safer...
-        if (
-            // document.querySelector('[data-eloqua-formid]')?.length &&
-            window.history &&
-            window.history.replaceState
-        ) {
+        if (window.history && window.history.replaceState) {
             window.history.replaceState({}, '', this.url.toString());
         }
     }

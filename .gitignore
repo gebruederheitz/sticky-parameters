@@ -1,6 +1,15 @@
+# Node & NPM
 node_modules
-.idea
 .npmrc
 yarn-error.log
+
+# IDEs
+.idea
+
+# Builds
 dist/
 demo/build/
+
+# Backup files, Caches etc.
+*.cache
+*.bak

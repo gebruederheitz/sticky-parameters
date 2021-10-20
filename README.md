@@ -43,10 +43,8 @@ applyToExternalLinks:
 ## Installation
 
 ```shell
-> npm i @ghcore/sticky-parameters
+> npm i @gebruederheitz/sticky-parameters
 ```
-
-Make sure you have access to the private GitHub npm registry @ ghcore.
 
 
 ## Usage
@@ -102,7 +100,24 @@ provided in order to measure SEO performance.
 import { StickyParameters, ReferrerParameters } from '@gebruederheitz/sticky-parameters';
 
 const sp = new StickyParameters(params, domains, true);
-new ReferrerParameters(sp); // RP will call .run() on the provided SP at the right time
+new ReferrerParameters(
+    // RP will call .run() on the provided SP at the right time:
+    sp,
+    // If this parameter is set, processing will be skipped:
+    'indexParameter',
+    // Only these parameters will be parsed from the current URL:
+    ['indexParameter', 'utm_id', 'source'],  
+    // When a referrer is set, this callback will allow you to set your parameters
+    // to the appropriate values based on the referrer string:
+    (referrerString) => [
+        {name: 'source', value: referrerString}
+    ],
+    // These parameters will be set when the indexParameter is not set and no
+    // referrer string could be read from the browser:
+    [
+        {name: 'source', value: 'direct'},
+    ]
+); 
 ```
 
 #### UMD / CommonJS
@@ -117,7 +132,7 @@ new ReferrerParameters(sp); // RP will call .run() on the provided SP at the rig
 
     <script>
         const sp = new stickyParameters.StickyParameters(params, domains, false);
-        new stickyParameters.ReferrerParameters(sp);
+        new stickyParameters.ReferrerParameters(sp, indexP, parsedPs, getPsByRef, directPs);
     </script>
 </body>
 ```
