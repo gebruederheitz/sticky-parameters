@@ -14,9 +14,11 @@
     "url": "git+https://github.com/gebruederheitz/sticky-parameters.git"
   },
   "keywords": [
-    "Wordpress",
-    "Gutenberg",
-    "skeleton"
+    "url",
+    "parameter",
+    "tracking",
+    "cross-domain",
+    "query"
   ],
   "bugs": {
     "url": "https://github.com/gebruederheitz/sticky-parameters/issues"
@@ -35,7 +37,8 @@
     "host": "sirv demo --no-clear --host",
     "lint": "eslint src/**/*.js",
     "prettier:check": "prettier -c --config .prettierrc src/",
-    "prettier:fix": "prettier -w --config .prettierrc src/"
+    "prettier:fix": "prettier -w --config .prettierrc src/",
+    "release": "release-it"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
@@ -49,10 +52,14 @@
     "eslint-config-prettier": "^7.2.0",
     "eslint-plugin-prettier": "^3.3.1",
     "prettier": "^2.2.1",
+    "release-it": "^14.12.1",
     "rollup": "^2.39.0",
     "rollup-plugin-copy": "^3.4.0",
     "rollup-plugin-livereload": "^2.0.0",
     "rollup-plugin-terser": "^7.0.2",
     "sirv-cli": "^1.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

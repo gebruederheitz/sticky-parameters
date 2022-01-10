@@ -140,23 +140,20 @@ new ReferrerParameters(
 
 ## Development
 
+Take a look at the `Makefile` for an overview of the most common tasks needed
+during development. To quickly get the project up and running use
+
 ```shell
-# Install dependencies
-$> npm i
-
-# Run watch task with dev server for testing
-$> npm run dev
-
-# Lint JS sources
-$> npm run lint
-
-# Check files for proper code style
-$> npm run prettier:check
-
-# Fix code style using prettier (use with caution!)
-$> npm run prettier:fix
-
-# Production build
-$> npm run build
+# Install dependencies, run a watch task and host demo at localhost:5000:
+$> make
+# or, more explicitly:
+$> make dev
 ```
 
+To publish a new release you can use `release-it` with
+
+```shell
+$> make release
+# or
+$> npm run release
+```
