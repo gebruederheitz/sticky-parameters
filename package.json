@@ -1,6 +1,6 @@
 {
   "name": "@gebruederheitz/sticky-parameters",
-  "version": "2.3.1",
+  "version": "2.3.2",
   "description": "Forward certain URL parameters to allowlisted or non-denylisted links on the current site.",
   "module": "dist/index.m.js",
   "main": "dist/sticky-parameters.umd.js",
