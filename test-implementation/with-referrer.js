@@ -1,9 +1,9 @@
 import { StickyParameters, ReferrerParameters } from '../src';
 import config from './default-config.js';
 
-const relevantParameters = ['akttyp', 'med', 'aktnr', 'wnr'];
+const relevantParameters = ['med', 'purl', 'campaign', 'adword'];
 
-const indexParameter = 'akttyp';
+const indexParameter = 'med';
 
 const getReferrerParameterValues = (referrerString) => {
     let processOtherFields = false;
@@ -30,19 +30,19 @@ const getReferrerParameterValues = (referrerString) => {
     if (processOtherFields) {
         return [
             {
-                name: 'akttyp',
+                name: 'med',
                 value: 'organic search',
             },
             {
-                name: 'med',
+                name: 'purl',
                 value: referrerString,
             },
             {
-                name: 'aktnr',
+                name: 'campaign',
                 value: '123',
             },
             {
-                name: 'wnr',
+                name: 'adword',
                 value: '456',
             },
         ];
@@ -58,15 +58,15 @@ const getReferrerParameterValues = (referrerString) => {
 
 const directParameters = [
     {
-        name: 'akttyp',
-        value: 'direkt',
+        name: 'med',
+        value: 'direct',
     },
     {
-        name: 'aktnr',
+        name: 'campaign',
         value: '789',
     },
     {
-        name: 'wnr',
+        name: 'adword',
         value: '000111',
     },
 ];

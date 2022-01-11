@@ -7,26 +7,44 @@
     <title>Sticky Parameters Test Page</title>
 
     <link rel='icon' type='image/png' href='/favicon.png'>
-
-    <!--<script defer src='/build/test.js'></script> -->
+    <link rel="stylesheet" href="/style.css" />
     <script defer src='/build/demo-bundle.js'></script>
 </head>
 
 <body>
 <div class="container">
     <h1>Sticky Parameters Test Page</h1>
+    <p>
+        Pass arbitrary query parameters to this page and observe how the anchor
+        elements below are modified. You can also use
+        <a href="/?utm_id=42&color=blue">this demo link</a> to have some
+        parameters set for you.
+    </p>
     <ul>
         <li>
-            <a href="https://umantis.com/test?param1=true">https://umantis.com/test?param1=true</a>
+            <a href="https://example.net/test?param1=true">https://example.net/test?param1=true</a>
         </li>
         <li>
-            <a href="https://www.umantis.com/test?param1=true">https://www.umantis.com/test?param1=true</a>
+            <a href="https://www.example.net/test?param1=true">https://www.example.net/test?param1=true</a>
         </li>
         <li>
             <a href="https://example.com/test?param1=true">https://example.com/test?param1=true</a>
         </li>
         <li>
             <a href="https://example.com/test?param1=true&second=blue">https://example.com/test?param1=true&second=blue</a>
+        </li>
+    </ul>
+
+    <h3>Other test pages</h3>
+    <ul>
+        <li>
+            <a href="/from-umd">Using the UMD build</a>
+        </li>
+        <li>
+            <a href="/with-referrer">With Referrer Parameters</a>
+        </li>
+        <li>
+            <a href="/with-referrer/google">With RP & Google referrer</a>
         </li>
     </ul>
 

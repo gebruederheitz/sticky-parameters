@@ -7,21 +7,20 @@
     <title>Sticky Parameters Test Page</title>
 
     <link rel='icon' type='image/png' href='/favicon.png'>
-
-    <!--<script defer src='/build/test.js'></script> -->
+    <link rel="stylesheet" href="/style.css" />
     <script src='/build/sticky-parameters.umd.js'></script>
-<!--    <script src="https://cdn.jsdelivr.net/npm/when-dom-ready@1.2.12/dist/index.umd.js"></script>-->
 </head>
 
 <body>
 <div class="container">
     <h1>Sticky Parameters Test Page</h1>
+    <h2>UMD bundle</h2>
     <ul>
         <li>
-            <a href="https://umantis.com/test?param1=true">https://umantis.com/test?param1=true</a>
+            <a href="https://example.net/test?param1=true">https://example.net/test?param1=true</a>
         </li>
         <li>
-            <a href="https://www.umantis.com/test?param1=true">https://www.umantis.com/test?param1=true</a>
+            <a href="https://www.example.net/test?param1=true">https://www.example.net/test?param1=true</a>
         </li>
         <li>
             <a href="https://example.com/test?param1=true">https://example.com/test?param1=true</a>
@@ -35,7 +34,7 @@
 <script>
     const sp = new window.stickyParameters.StickyParameters(
         ['purl', 'med'],
-        ['umantis.com'],
+        ['example.net'],
         true,
     );
     sp.run();
